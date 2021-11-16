@@ -36,7 +36,63 @@
          
 ##### Multi-Class Classification Loss Function
 ###### If we take a dataset like Iris where we need to predict the three-class labels: Setosa, Versicolor and Virginia, in such cases where the target variable has more than two classes Multi-Class Classification Loss function is used.
-1.    
+   
 
-1.    Cross Entropy:
+1.    Cross Entropy:is the default loss function to use for multi-class classification problems.
 
+In this case, it is intended for use with multi-class classification where the target values are in the set {0, 1, 3, …, n}, where each class is assigned a unique integer value.
+
+Mathematically, it is the preferred loss function under the inference framework of maximum likelihood. It is the loss function to be evaluated first and only changed if you have a good reason.
+
+Cross-entropy will calculate a score that summarizes the average difference between the actual and predicted probability distributions for all classes in the problem. The score is minimized and a perfect cross-entropy value is 0.Cross-entropy can be specified as the loss function in Keras by specifying ‘categorical_crossentropy‘ when compiling the model.The function requires that the output layer is configured with an n nodes (one for each class), in this case three nodes, and a ‘softmax‘ activation in order to predict the probability for each class.
+                
+                
+                model.add(Dense(3, activation='softmax')
+ 
+This is to ensure that each example has an expected probability of 1.0 for the actual class value and an expected probability of 0.0 for all other class values. This can be achieved using the to_categorical() Keras function.
+                  
+                  # one hot encode output variable
+                  y = to_categorical(y)
+For example, three class labels will be integer encoded as 0, 1, and 2. Then encoded to vectors as follows:
+
+Class 0: [1, 0, 0]
+Class 1: [0, 1, 0]
+Class 2: [0, 0, 1]
+This is called a one-hot encoding.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------\
+#### Available losses
+Note that all losses are available both via a class handle and via a function handle. The class handles enable you to pass configuration arguments to the constructor (e.g. loss_fn = CategoricalCrossentropy(from_logits=True)), and they perform reduction by default when used in a standalone way (see details below).
+##### Probabilistic losses
+- BinaryCrossentropy class......> for binary output
+
+- CategoricalCrossentropy class........>here internly doing one hot encodng for classificatioon output like iris,rating ....>output like{.22,.31,.68}and which is having high probability will take as its output
+
+- SparseCategoricalCrossentropy class---------->here we will get out maximum probabilty index{0,1,2}i.e y_predict=2
+Poisson class
+
+- binary_crossentropy function
+- categorical_crossentropy function
+- sparse_categorical_crossentropy function
+- poisson function
+- KLDivergence class
+- kl_divergence function
+
+##### Regression losses
+- MeanSquaredError class
+- MeanAbsoluteError class
+- MeanAbsolutePercentageError class
+- MeanSquaredLogarithmicError class
+- CosineSimilarity class
+- mean_squared_error function
+- mean_absolute_error function
+- mean_absolute_percentage_error function
+- mean_squared_logarithmic_error function
+- cosine_similarity function
+- Huber class
+- huber function
+- LogCosh class
+- log_cosh function
+
+#### losses are diffrent for regression problem as well as classification problem 
